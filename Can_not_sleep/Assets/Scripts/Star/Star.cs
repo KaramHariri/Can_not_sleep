@@ -79,6 +79,7 @@ public class Star : MonoBehaviour
 
     public void ActivateDisappearance()
     {
+        deactivateGlow();
         StopAllCoroutines();
         StartCoroutine(Disappear());
     }

@@ -9,7 +9,7 @@ public class GameHandler : MonoBehaviour
     public GameObject starPrefab;
 
     public BackgroundMover background;
-    float xOffset = 5.0f;
+    float xOffset = 4.0f;
 
     enum GameState
     {
@@ -92,8 +92,8 @@ public class GameHandler : MonoBehaviour
 
     void SetStarPositions()
     {
-        float xBounds = 15.0f;
-        float yBounds = 15.0f;
+        float xBounds = 3.0f;
+        float yBounds = 3.0f;
 
 
         for (int i = 0; i < 4; i++)
@@ -151,7 +151,7 @@ public class GameHandler : MonoBehaviour
         currentState = GameState.StartingNewRound;
 
         background.ActivateMoveBackground();
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(3.0f);
         SetStarPositions();
         foreach(Star script in starScripts)
         {

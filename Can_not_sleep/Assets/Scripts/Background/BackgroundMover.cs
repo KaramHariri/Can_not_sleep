@@ -5,14 +5,14 @@ using UnityEngine;
 public class BackgroundMover : MonoBehaviour
 {
     public float lerpTime = 0.7f;
+    private float zoomTime = 1.2f;
 
     private float xBounds = 5.0f; 
-    private float yBounds = 5.0f;
+    private float yBounds = 2.5f;
 
     int currentQuadrant = 0;
     void Start()
     {
-        
     }
 
     void Update()
@@ -31,7 +31,17 @@ public class BackgroundMover : MonoBehaviour
 
     IEnumerator MoveBackground()
     {
-        float currentTime = 0;
+        float zoomInCurrentTime = 0f;
+        while (zoomInCurrentTime < zoomTime)
+        {
+            zoomInCurrentTime += Time.deltaTime;
+            if (zoomInCurrentTime > zoomTime) { zoomInCurrentTime = zoomTime; }
+            //Camera.main.rect = new Rect(0, 0, CubicEaseIn(zoomInCurrentTime, 0.5f, 1f, zoomTime), CubicEaseIn(zoomInCurrentTime, 0.5f, 1f, zoomTime));
+            Camera.main.orthographicSize = CubicEaseOut(zoomInCurrentTime, 4.1f, 0.9f, zoomTime);
+            yield return null;
+        }
+
+        float currentTime = 0f;
 
         int randomQuad = currentQuadrant + Random.Range(1, 4);
         //Debug.Log("Current = " + currentQuadrant + " - New = " + (randomQuad % 4));
@@ -88,6 +98,17 @@ public class BackgroundMover : MonoBehaviour
             transform.position = Vector3.Lerp(currentPosition, destinationPosition, (currentTime / lerpTime));
             yield return null;
         }
+
+        float zoomOutCurrentTime = 0f;
+        while (zoomOutCurrentTime < zoomTime)
+        {
+            zoomOutCurrentTime += Time.deltaTime;
+            if (zoomOutCurrentTime > zoomTime) { zoomOutCurrentTime = zoomTime; }
+            //Camera.main.rect = new Rect(0,0,CubicEaseIn(zoomOutCurrentTime,1,0.5f,zoomTime), CubicEaseIn(zoomOutCurrentTime, 1, 0.5f, zoomTime));
+            Camera.main.orthographicSize = CubicEaseOut(zoomOutCurrentTime, 5f, -0.9f, zoomTime);
+            yield return null;
+        }
+
     }
 
     float CubicEaseIn( float t, float b, float c, float d )
