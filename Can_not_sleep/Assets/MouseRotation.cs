@@ -25,9 +25,16 @@ public class MouseRotation : MonoBehaviour
     private float rotationAmountFactor = 1f;
 
     public bool selected = false;
+    public bool invertRotation = false;
+
+    GameObject childCollider = null;
+    GameObject referencePoint = null;
 
     private void Start()
     {
+        childCollider = transform.GetChild(0).gameObject;
+        referencePoint = transform.GetChild(1).gameObject;
+
         float currentRotationAngle = transform.rotation.eulerAngles.z;
         if (currentRotationAngle > 180f)
         {
@@ -57,6 +64,12 @@ public class MouseRotation : MonoBehaviour
             {
                 float deltaX = (Input.mousePosition.x - mousePreviousPos.x) * rotationAmountFactor;
                 float deltaY = (Input.mousePosition.y - mousePreviousPos.y) * rotationAmountFactor;
+                if(invertRotation)
+                {
+                    deltaX *= -1f;
+                    deltaY *= -1f;
+                }
+
                 if(rotationDirection == RotationDirection.HORIZONTAL)
                 {
                     transform.Rotate(0f, 0f, deltaX, Space.World);
@@ -77,6 +90,9 @@ public class MouseRotation : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0f, 0f, maxRotationAmount - 0.5f);
         }
+
+        float childColliderOffset = 8f;
+        childCollider.transform.position = new Vector3(referencePoint.transform.position.x + childColliderOffset, referencePoint.transform.position.y, referencePoint.transform.position.z);
 
         mousePreviousPos = Input.mousePosition;
     }
