@@ -21,7 +21,7 @@ public class ObjectSelection : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.Raycast(raycastPosition, Vector2.zero);
 
             // Check if the object has a collider.
-            if(raycastHit.collider != null)
+            if(raycastHit.collider != null && !raycastHit.collider.CompareTag("ArmCollider"))
             {
                 if(currentSelectedObject != null) 
                 {

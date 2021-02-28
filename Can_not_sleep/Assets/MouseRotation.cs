@@ -42,6 +42,9 @@ public class MouseRotation : MonoBehaviour
         }
         minRotationAmount = currentRotationAngle - maxRotationAmountFromOriginal;
         maxRotationAmount = currentRotationAngle + maxRotationAmountFromOriginal;
+
+        float childColliderOffset = 8f;
+        childCollider.transform.position = new Vector3(referencePoint.transform.position.x + childColliderOffset, referencePoint.transform.position.y, referencePoint.transform.position.z);
     }
     void Update()
     {

@@ -10,6 +10,7 @@ public class GameHandler : MonoBehaviour
 
     public BackgroundMover background;
     float xOffset = 4.0f;
+    float yOffset = 0.75f;
 
     enum GameState
     {
@@ -26,7 +27,7 @@ public class GameHandler : MonoBehaviour
         for(int i = 0; i < 4; i++)
         {
             if(starPrefab == null) { Debug.Log("Star Prefab equals null !"); return; }
-            GameObject temp = Instantiate(starPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            GameObject temp = Instantiate(starPrefab, new Vector3(100, 100, 0), Quaternion.identity);
             Star tempScript = temp.GetComponent<Star>();
             if(tempScript == null) { Debug.Log("temp StarScript equals null"); return; }
 
@@ -92,57 +93,71 @@ public class GameHandler : MonoBehaviour
 
     void SetStarPositions()
     {
-        float xBounds = 3.0f;
-        float yBounds = 3.0f;
-
+        float randomX = 0;
+        float randomY = 0;
 
         for (int i = 0; i < 4; i++)
         {
-            float randomX = Random.Range(1f, xBounds);
-            float randomY = Random.Range(1f, yBounds);
 
             switch (i)
             {
                 case 0:
-                {
-                    //Quad1
-                    //Debug.Log("0");
-                    randomX = xOffset + randomX;
-                }
-                break;
+                    {
+                        //Quad1
+                        int randomAngle = Random.Range(0, 60);
+                        float xPos = Mathf.Cos(randomAngle * Mathf.Deg2Rad) * 2.5f;
+                        float yPos = Mathf.Sin(randomAngle * Mathf.Deg2Rad) * 2.5f;
+
+                        randomX = xPos + 4.0f + 0.2f;
+                        randomY = yPos + 0.15f;
+                    }
+                    break;
 
                 case 1:
-                {
-                    //Quad2
-                    //Debug.Log("1");
-                    randomX = xOffset - randomX;
-                }
-                break;
+                    {
+                        //Quad2
+                        int randomAngle = Random.Range(120, 180);
+                        float xPos = Mathf.Cos(randomAngle * Mathf.Deg2Rad) * 2.5f;
+                        float yPos = Mathf.Sin(randomAngle * Mathf.Deg2Rad) * 2.5f;
+
+                        randomX = xPos + 4.0f - 0.2f;
+                        randomY = yPos + 0.15f;
+
+                    }
+                    break;
 
                 case 2:
-                {
-                    //Debug.Log("2");
-                    //Quad3
-                    randomX = xOffset - randomX;
-                    randomY = -randomY;
-                }
-                break;
+                    {
+                        //Quad3
+                        int randomAngle = Random.Range(210, 260);
+                        float xPos = Mathf.Cos(randomAngle * Mathf.Deg2Rad) * 2.5f;
+                        float yPos = Mathf.Sin(randomAngle * Mathf.Deg2Rad) * 2.5f;
+
+                        randomX = xPos + 4.0f - 0.3f;
+                        randomY = yPos - 1.6f;
+
+                    }
+                    break;
 
                 case 3:
-                {
-                    //Debug.Log("3");
-                    //Quad4
-                    randomX = xOffset + randomX;
-                    randomY = -randomY;
-                }
-                break;
+                    {
+                        //Quad4
+                        int randomAngle = Random.Range(280, 330);
+                        float xPos = Mathf.Cos(randomAngle * Mathf.Deg2Rad) * 2.5f;
+                        float yPos = Mathf.Sin(randomAngle * Mathf.Deg2Rad) * 2.5f;
+
+                        randomX = xPos + 4.0f + 0.3f;
+                        randomY = yPos - 1.6f;
+
+                    }
+                    break;
 
                 default:
                     Debug.Log("Default switch -> Should not happen!");
                     break;
             }
             //Debug.Log("i = " + i + " pos : " + randomX + ", "+ randomY);
-            starObjects[i].transform.position = new Vector3(randomX,randomY,transform.position.z);
+            starObjects[i].transform.position = new Vector3(randomX, randomY, transform.position.z);
         }
     }
 

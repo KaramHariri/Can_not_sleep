@@ -87,7 +87,6 @@ public class Star : MonoBehaviour
     IEnumerator Appear()
     {
         float currentTime = 0;
-
         while (currentTime < appearTime)
         {
             currentTime += Time.deltaTime;
@@ -125,4 +124,20 @@ public class Star : MonoBehaviour
         return c * ((t = t / d - 1) * t * t + 1) + b;
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.name == "Collider")
+        {
+            currentState = StarState.Active;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.name == "Collider")
+        {
+            currentState = StarState.Inactive;
+        }
+    }
 }
