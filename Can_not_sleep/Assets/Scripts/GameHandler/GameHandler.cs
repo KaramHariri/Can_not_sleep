@@ -12,6 +12,10 @@ public class GameHandler : MonoBehaviour
     float xOffset = 4.0f;
     float yOffset = 0.75f;
 
+    float timePlayed = 0f;
+
+    public GameObject ending = null;
+
     enum GameState
     {
         Playing,
@@ -41,10 +45,18 @@ public class GameHandler : MonoBehaviour
 
     void Update()
     {
+        timePlayed += Time.deltaTime;
+
+        if(timePlayed >= 300f)
+        {
+            ending.SetActive(true);
+        }
+
         if (currentState != GameState.Playing)
             return;
 
         checkRoundCondition();
+        
 
         //if(Input.GetKeyDown(KeyCode.T))
         //{
